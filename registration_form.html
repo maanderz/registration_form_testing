@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons for Eye Toggles & Checkmarks -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom smooth transition for input borders and strength meter */
+        .input-transition {
+            transition: all 0.25s ease-in-out;
+        }
+        .strength-bar {
+            transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4">
+
+    <!-- Main Container -->
+    <div class="w-full max-w-lg bg-slate-800 border border-slate-700/60 rounded-2xl shadow-2xl p-6 sm:p-8 relative overflow-hidden">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold tracking-tight text-white mb-2">Create Account</h1>
+            <p class="text-slate-400 text-sm">Join us today! Enter your details below.</p>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="registrationForm" class="space-y-5" novalidate>
+            
+            <!-- Full Name Field -->
+            <div>
+                <label for="fullName" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Full Name</label>
+                <div class="relative">
+                    <input type="text" id="fullName" name="fullName" placeholder="John Doe"
+                        class="w-full px-4 py-3 bg-slate-900/80 text-white placeholder-slate-500 rounded-xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 input-transition">
+                    <span id="fullNameIcon" class="absolute right-3.5 top-3.5 text-slate-400 hidden"></span>
+                </div>
+                <p id="fullNameError" class="mt-1.5 text-xs text-rose-400 font-medium hidden"></p>
+            </div>
+
+            <!-- Email Address Field -->
+            <div>
+                <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Email Address</label>
+                <div class="relative">
+                    <input type="email" id="email" name="email" placeholder="john@example.com"
+                        class="w-full px-4 py-3 bg-slate-900/80 text-white placeholder-slate-500 rounded-xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 input-transition">
+                    <span id="emailIcon" class="absolute right-3.5 top-3.5 text-slate-400 hidden"></span>
+                </div>
+                <p id="emailError" class="mt-1.5 text-xs text-rose-400 font-medium hidden"></p>
+            </div>
+
+            <!-- Password Field -->
+            <div>
+                <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Password</label>
+                <div class="relative">
+                    <input type="password" id="password" name="password" placeholder="••••••••"
+                        class="w-full pl-4 pr-11 py-3 bg-slate-900/80 text-white placeholder-slate-500 rounded-xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 input-transition">
+                    <button type="button" id="togglePassword" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-200 focus:outline-none" aria-label="Toggle password visibility">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                </div>
+                <p id="passwordError" class="mt-1.5 text-xs text-rose-400 font-medium hidden"></p>
+
+                <!-- Password Strength Indicator -->
+                <div id="strengthContainer" class="mt-2.5 hidden">
+                    <div class="flex items-center justify-between text-xs mb-1 text-slate-400">
+                        <span>Strength:</span>
+                        <span id="strengthText" class="font-semibold text-slate-400">-</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                        <div id="strengthBar" class="h-full w-0 strength-bar rounded-full"></div>
+                    </div>
+                    <!-- Password Requirements Checklist -->
+                    <ul class="mt-2.5 grid grid-cols-2 gap-1 text-[11px] text-slate-400">
+                        <li id="reqLength" class="flex items-center gap-1.5"><i class="fa-regular fa-circle"></i> Min 8 chars</li>
+                        <li id="reqUpper" class="flex items-center gap-1.5"><i class="fa-regular fa-circle"></i> Uppercase</li>
+                        <li id="reqLower" class="flex items-center gap-1.5"><i class="fa-regular fa-circle"></i> Lowercase</li>
+                        <li id="reqNumber" class="flex items-center gap-1.5"><i class="fa-regular fa-circle"></i> Number</li>
+                        <li id="reqSpecial" class="flex items-center gap-1.5 col-span-2"><i class="fa-regular fa-circle"></i> Special character (!@#$%^&*)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div>
+                <label for="confirmPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1">Confirm Password</label>
+                <div class="relative">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="••••••••"
+                        class="w-full pl-4 pr-11 py-3 bg-slate-900/80 text-white placeholder-slate-500 rounded-xl border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 input-transition">
+                    <button type="button" id="toggleConfirmPassword" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-200 focus:outline-none" aria-label="Toggle confirm password visibility">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                </div>
+                <p id="confirmPasswordError" class="mt-1.5 text-xs text-rose-400 font-medium hidden"></p>
+            </div>
+
+            <!-- Terms and Conditions Checkbox -->
+            <div>
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" id="terms" name="terms" class="mt-1 w-4 h-4 rounded border-slate-700 bg-slate-900 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-slate-800">
+                    <span class="text-xs text-slate-300 group-hover:text-slate-200 leading-relaxed">
+                        I agree to the <a href="#" class="text-indigo-400 underline hover:text-indigo-300">Terms of Service</a> and <a href="#" class="text-indigo-400 underline hover:text-indigo-300">Privacy Policy</a>.
+                    </span>
+                </label>
+                <p id="termsError" class="mt-1.5 text-xs text-rose-400 font-medium hidden"></p>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn" 
+                class="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800 cursor-pointer">
+                Create Account
+            </button>
+        </form>
+
+        <!-- Success Screen (Initially Hidden) -->
+        <div id="successCard" class="hidden text-center py-6">
+            <div class="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-500/30">
+                <i class="fa-solid fa-check text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-white mb-2">Registration Successful!</h2>
+            <p class="text-slate-300 text-sm mb-6">Welcome aboard! Here is a summary of your account details:</p>
+            
+            <div class="bg-slate-900/80 rounded-xl p-4 text-left border border-slate-700/60 mb-6 space-y-2">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-400 font-medium">Full Name:</span>
+                    <span id="summaryName" class="text-slate-200 font-semibold"></span>
+                </div>
+                <div class="flex justify-between items-center text-xs border-t border-slate-800 pt-2">
+                    <span class="text-slate-400 font-medium">Email Address:</span>
+                    <span id="summaryEmail" class="text-slate-200 font-semibold"></span>
+                </div>
+                <div class="flex justify-between items-center text-xs border-t border-slate-800 pt-2">
+                    <span class="text-slate-400 font-medium">Account Status:</span>
+                    <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-circle-check"></i> Verified
+                    </span>
+                </div>
+            </div>
+
+            <button type="button" id="resetBtn" 
+                class="w-full py-3 px-4 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-xl transition duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 cursor-pointer">
+                Register Another User
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Form Validation & Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Element references
+            const form = document.getElementById('registrationForm');
+            const successCard = document.getElementById('successCard');
+
+            const fullName = document.getElementById('fullName');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const terms = document.getElementById('terms');
+
+            const togglePassword = document.getElementById('togglePassword');
+            const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+
+            const strengthContainer = document.getElementById('strengthContainer');
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+
+            const summaryName = document.getElementById('summaryName');
+            const summaryEmail = document.getElementById('summaryEmail');
+            const resetBtn = document.getElementById('resetBtn');
+
+            // Password requirement items
+            const reqs = {
+                length: document.getElementById('reqLength'),
+                upper: document.getElementById('reqUpper'),
+                lower: document.getElementById('reqLower'),
+                number: document.getElementById('reqNumber'),
+                special: document.getElementById('reqSpecial')
+            };
+
+            // Toggle Password Visibility Logic
+            function setupPasswordToggle(buttonEl, inputEl) {
+                buttonEl.addEventListener('click', () => {
+                    const type = inputEl.getAttribute('type') === 'password' ? 'text' : 'password';
+                    inputEl.setAttribute('type', type);
+                    const icon = buttonEl.querySelector('i');
+                    if (type === 'text') {
+                        icon.classList.remove('fa-eye');
+                        icon.classList.add('fa-eye-slash');
+                    } else {
+                        icon.classList.remove('fa-eye-slash');
+                        icon.classList.add('fa-eye');
+                    }
+                });
+            }
+
+            setupPasswordToggle(togglePassword, password);
+            setupPasswordToggle(toggleConfirmPassword, confirmPassword);
+
+            // UI helper functions to display errors / success states
+            function setError(inputEl, errorEl, message) {
+                inputEl.classList.remove('border-slate-700', 'border-emerald-500', 'focus:ring-emerald-500/50');
+                inputEl.classList.add('border-rose-500', 'focus:ring-rose-500/50');
+                errorEl.textContent = message;
+                errorEl.classList.remove('hidden');
+            }
+
+            function setSuccess(inputEl, errorEl) {
+                inputEl.classList.remove('border-slate-700', 'border-rose-500', 'focus:ring-rose-500/50');
+                inputEl.classList.add('border-emerald-500', 'focus:ring-emerald-500/50');
+                errorEl.classList.add('hidden');
+            }
+
+            function clearStatus(inputEl, errorEl) {
+                inputEl.classList.remove('border-rose-500', 'border-emerald-500', 'focus:ring-rose-500/50', 'focus:ring-emerald-500/50');
+                inputEl.classList.add('border-slate-700');
+                errorEl.classList.add('hidden');
+            }
+
+            // Validation logic for individual fields
+            function validateFullName() {
+                const val = fullName.value.trim();
+                const errorEl = document.getElementById('fullNameError');
+                if (val === '') {
+                    setError(fullName, errorEl, 'Full name is required.');
+                    return false;
+                } else if (val.length < 2) {
+                    setError(fullName, errorEl, 'Full name must be at least 2 characters.');
+                    return false;
+                } else {
+                    setSuccess(fullName, errorEl);
+                    return true;
+                }
+            }
+
+            function validateEmail() {
+                const val = email.value.trim();
+                const errorEl = document.getElementById('emailError');
+                // Standard RFC 5322 regex for email validation
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+                if (val === '') {
+                    setError(email, errorEl, 'Email address is required.');
+                    return false;
+                } else if (!emailRegex.test(val)) {
+                    setError(email, errorEl, 'Please enter a valid email address.');
+                    return false;
+                } else {
+                    setSuccess(email, errorEl);
+                    return true;
+                }
+            }
+
+            function updateRequirementUI(element, isMet) {
+                const icon = element.querySelector('i');
+                if (isMet) {
+                    element.classList.remove('text-slate-400');
+                    element.classList.add('text-emerald-400');
+                    icon.className = 'fa-solid fa-circle-check';
+                } else {
+                    element.classList.remove('text-emerald-400');
+                    element.classList.add('text-slate-400');
+                    icon.className = 'fa-regular fa-circle';
+                }
+            }
+
+            function validatePassword() {
+                const val = password.value;
+                const errorEl = document.getElementById('passwordError');
+
+                if (val.length > 0) {
+                    strengthContainer.classList.remove('hidden');
+                } else {
+                    strengthContainer.classList.add('hidden');
+                }
+
+                // Check rules
+                const checks = {
+                    length: val.length >= 8,
+                    upper: /[A-Z]/.test(val),
+                    lower: /[a-z]/.test(val),
+                    number: /[0-9]/.test(val),
+                    special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val)
+                };
+
+                // Update checklist indicators
+                updateRequirementUI(reqs.length, checks.length);
+                updateRequirementUI(reqs.upper, checks.upper);
+                updateRequirementUI(reqs.lower, checks.lower);
+                updateRequirementUI(reqs.number, checks.number);
+                updateRequirementUI(reqs.special, checks.special);
+
+                // Calculate strength score (0 to 5)
+                const passedCount = Object.values(checks).filter(Boolean).length;
+
+                // Update Strength Meter Bar & Label
+                if (val.length === 0) {
+                    strengthBar.style.width = '0%';
+                    strengthText.textContent = '-';
+                    strengthText.className = 'font-semibold text-slate-400';
+                } else if (passedCount <= 2) {
+                    strengthBar.style.width = '33%';
+                    strengthBar.style.backgroundColor = '#f43f5e'; // Rose / Weak
+                    strengthText.textContent = 'Weak';
+                    strengthText.className = 'font-semibold text-rose-400';
+                } else if (passedCount <= 4) {
+                    strengthBar.style.width = '66%';
+                    strengthBar.style.backgroundColor = '#f59e0b'; // Amber / Medium
+                    strengthText.textContent = 'Medium';
+                    strengthText.className = 'font-semibold text-amber-400';
+                } else {
+                    strengthBar.style.width = '100%';
+                    strengthBar.style.backgroundColor = '#10b981'; // Emerald / Strong
+                    strengthText.textContent = 'Strong';
+                    strengthText.className = 'font-semibold text-emerald-400';
+                }
+
+                if (val === '') {
+                    setError(password, errorEl, 'Password is required.');
+                    return false;
+                } else if (passedCount < 5) {
+                    setError(password, errorEl, 'Please satisfy all password criteria.');
+                    return false;
+                } else {
+                    setSuccess(password, errorEl);
+                    return true;
+                }
+            }
+
+            function validateConfirmPassword() {
+                const val = confirmPassword.value;
+                const errorEl = document.getElementById('confirmPasswordError');
+
+                if (val === '') {
+                    setError(confirmPassword, errorEl, 'Please confirm your password.');
+                    return false;
+                } else if (val !== password.value) {
+                    setError(confirmPassword, errorEl, 'Passwords do not match.');
+                    return false;
+                } else {
+                    setSuccess(confirmPassword, errorEl);
+                    return true;
+                }
+            }
+
+            function validateTerms() {
+                const errorEl = document.getElementById('termsError');
+                if (!terms.checked) {
+                    errorEl.textContent = 'You must accept the terms and conditions.';
+                    errorEl.classList.remove('hidden');
+                    return false;
+                } else {
+                    errorEl.classList.add('hidden');
+                    return true;
+                }
+            }
+
+            // Real-time Event Listeners for Validation
+            fullName.addEventListener('input', validateFullName);
+            email.addEventListener('input', validateEmail);
+            
+            password.addEventListener('input', () => {
+                validatePassword();
+                if (confirmPassword.value.length > 0) {
+                    validateConfirmPassword();
+                }
+            });
+
+            confirmPassword.addEventListener('input', validateConfirmPassword);
+            terms.addEventListener('change', validateTerms);
+
+            // Form Submit Event Handler
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Run all validations
+                const isNameValid = validateFullName();
+                const isEmailValid = validateEmail();
+                const isPasswordValid = validatePassword();
+                const isConfirmPasswordValid = validateConfirmPassword();
+                const isTermsValid = validateTerms();
+
+                // If all fields are valid, process the form
+                if (isNameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid && isTermsValid) {
+                    // Populate success card data
+                    summaryName.textContent = fullName.value.trim();
+                    summaryEmail.textContent = email.value.trim();
+
+                    // Hide Form and Show Success Screen
+                    form.classList.add('hidden');
+                    successCard.classList.remove('hidden');
+                }
+            });
+
+            // Reset Button Event Listener
+            resetBtn.addEventListener('click', () => {
+                form.reset();
+                
+                // Clear UI states
+                clearStatus(fullName, document.getElementById('fullNameError'));
+                clearStatus(email, document.getElementById('emailError'));
+                clearStatus(password, document.getElementById('passwordError'));
+                clearStatus(confirmPassword, document.getElementById('confirmPasswordError'));
+                document.getElementById('termsError').classList.add('hidden');
+                strengthContainer.classList.add('hidden');
+
+                // Toggle back screens
+                successCard.classList.add('hidden');
+                form.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
